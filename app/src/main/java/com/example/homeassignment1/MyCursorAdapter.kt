@@ -16,8 +16,8 @@ class MyCursorAdapter(val context: Context, cursor: Cursor) : CursorAdapter(cont
     lateinit var nimi: String
     override fun onClick(view: View?) {
         nimi = view?.findViewById<TextView>(R.id.name)?.text as String
-        val intent = Intent(context,Main2Activity::class.java)
-        intent.putExtra("name",nimi)
+        val intent = Intent(context, Main2Activity::class.java)
+        intent.putExtra("name", nimi)
         //startActivity(intent) //why isn't this working? because its a cursoradapter class?
         Log.d("MA", nimi)
     }
