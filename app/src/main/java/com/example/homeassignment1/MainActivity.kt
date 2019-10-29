@@ -68,41 +68,6 @@ class MainActivity : AppCompatActivity() {
             null
         )
         if (cursor != null) {
-            if (cursor.count > 0) {
-                while (cursor.moveToNext()) {
-                    cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
-                    cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
-                    if (Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0)
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                    /*cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
-                    val cursorPhone = contentResolver.query(
-                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                        null,
-                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
-                        arrayOf(id),
-                        null
-                    )
-                    if (cursorPhone != null) {
-                        while (cursorPhone.moveToNext()) {
-                            val phoneNumber =
-                                cursorPhone.getString(
-                                    cursorPhone.getColumnIndex(
-                                        ContactsContract.CommonDataKinds.Phone.NUMBER
-                                    )
-                                )
-                            Log.i("Number", phoneNumber)
-                        }
-                    }
-                    cursorPhone?.close()*/
-
-                }
-            } else {
-                Toast.makeText(
-                    applicationContext,
-                    "No contacts available",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
             val lvItems = findViewById<ListView>(R.id.list)
             val adapter = MyCursorAdapter(this, cursor)
             lvItems.adapter = adapter

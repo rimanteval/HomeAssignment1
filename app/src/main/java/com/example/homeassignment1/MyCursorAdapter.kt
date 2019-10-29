@@ -16,10 +16,11 @@ class MyCursorAdapter(private val context: Context, cursor: Cursor) :
     CursorAdapter(context, cursor, true),
     View.OnClickListener {
     private val nameMap: MutableMap<String, String> = mutableMapOf()
+    private val messageMap: MutableMap<String, String> = mutableMapOf()
+    private val intent = Intent(context, Main2Activity::class.java)
     override fun onClick(view: View?) {
         val nimi = view?.findViewById<TextView>(R.id.name)?.text as String
         val numb = nameMap[nimi]
-        val intent = Intent(context, Main2Activity::class.java)
         intent.putExtra("name", nimi)
         intent.putExtra("number", numb)
         val bundle = intent.extras
@@ -41,9 +42,21 @@ class MyCursorAdapter(private val context: Context, cursor: Cursor) :
         val num =
             cursor?.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
         nameMap[body.toString()] = num.toString()
+        messageMap[body.toString()] = checkMessage(body.toString())
         view?.findViewById<TextView>(R.id.name)?.setOnClickListener(this)
         view?.findViewById<TextView>(R.id.name)?.text = body
         view?.findViewById<TextView>(R.id.number)?.text = num.toString()
+        view?.findViewById<TextView>(R.id.message)?.text = messageMap[body.toString()]
     }
 
+    private fun checkMessage(name: String): String {
+        if (intent.hasExtra("title") && intent.hasExtra("username")) {
+            Log.d("MA", intent.getStringExtra("title") as String)
+            Log.d("MA", intent.getStringExtra("username") as String)
+            if (name == intent.getStringExtra("username")) {
+                return intent.getStringExtra("title") as String
+            } else return " "
+        } else return " "
+
+    }
 }

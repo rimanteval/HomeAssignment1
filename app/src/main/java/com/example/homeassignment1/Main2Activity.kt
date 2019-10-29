@@ -31,6 +31,8 @@ class Main2Activity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
 
         button.setOnClickListener {
+            intent.putExtra("username",name)
+            intent.putExtra("email", name1)
             intent.putExtra("title", mailTitle.text.toString())
             intent.putExtra("message", mailMessage.text.toString())
             startActivity(intent)
