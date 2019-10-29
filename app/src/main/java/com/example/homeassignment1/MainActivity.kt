@@ -1,6 +1,7 @@
 package com.example.homeassignment1
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +13,10 @@ import android.view.View
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
 class MainActivity : AppCompatActivity() {
@@ -59,14 +64,17 @@ class MainActivity : AppCompatActivity() {
     private fun read() {
         val resolver = contentResolver
         val cursor = resolver.query(
-            ContactsContract.Contacts.CONTENT_URI, null, null, null,
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null,
             null
         )
         if (cursor != null) {
             if (cursor.count > 0) {
                 while (cursor.moveToNext()) {
-                    val id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
-                    cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                    cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
+                    cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                    if (Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0)
+                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                    /*cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
                     val cursorPhone = contentResolver.query(
                         ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                         null,
@@ -74,7 +82,19 @@ class MainActivity : AppCompatActivity() {
                         arrayOf(id),
                         null
                     )
-                    cursorPhone?.close()
+                    if (cursorPhone != null) {
+                        while (cursorPhone.moveToNext()) {
+                            val phoneNumber =
+                                cursorPhone.getString(
+                                    cursorPhone.getColumnIndex(
+                                        ContactsContract.CommonDataKinds.Phone.NUMBER
+                                    )
+                                )
+                            Log.i("Number", phoneNumber)
+                        }
+                    }
+                    cursorPhone?.close()*/
+
                 }
             } else {
                 Toast.makeText(

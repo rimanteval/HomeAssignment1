@@ -3,4 +3,7 @@
     <string name="search">Search</string>
     <string name="contact_details">Contact Details:</string>
     <string name="send_e_mail">Send E-mail</string>
+    <string name="mail_title">Mail Title</string>
+    <string name="mail_message">Mail message</string>
+    <string name="back">Back</string>
 </resources>
