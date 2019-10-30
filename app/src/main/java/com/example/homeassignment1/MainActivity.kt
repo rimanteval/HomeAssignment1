@@ -1,22 +1,19 @@
 package com.example.homeassignment1
 
 import android.Manifest
-import android.content.Intent
+import android.app.SearchManager
+import android.content.ComponentName
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.appcompat.widget.SearchView
 
 
 class MainActivity : AppCompatActivity() {
@@ -60,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
+    lateinit var adapter: MyCursorAdapter
     private fun read() {
         val resolver = contentResolver
         val cursor = resolver.query(
@@ -68,25 +65,32 @@ class MainActivity : AppCompatActivity() {
             null
         )
         if (cursor != null) {
-            val lvItems = findViewById<ListView>(R.id.list)
-            val adapter = MyCursorAdapter(this, cursor)
+            val lvItems: ListView = findViewById(R.id.list)
+            adapter = MyCursorAdapter(this, cursor)
             lvItems.adapter = adapter
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.toolbar_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
+        val searchManager = this.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchMenuItem = menu.findItem(R.id.action_search)
+        val searchView: SearchView = searchMenuItem.actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.isSubmitButtonEnabled
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_search -> {
-                //TODO(implement search function)
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                adapter.filter.filter(query)
                 return true
             }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+
+        })
+        return true
+    }*/
 }
