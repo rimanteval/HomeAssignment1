@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +18,8 @@ class MyCursorAdapter(private val context: Context, cursor: Cursor) :
     private val intent = Intent(context, Main2Activity::class.java)
     override fun onClick(view: View?) {
         val nimi = view?.findViewById<TextView>(R.id.name)?.text as String
-        view.findViewById<TextView>(R.id.message)?.text = "Message sent"
-        notifyDataSetChanged()
+        //view.findViewById<TextView>(R.id.message)?.text = "Message sent"
+        //notifyDataSetChanged()
         val numb = nameMap[nimi]
         intent.putExtra("name", nimi)
         intent.putExtra("number", numb)
@@ -30,10 +29,6 @@ class MyCursorAdapter(private val context: Context, cursor: Cursor) :
             intent,
             bundle
         )
-    }
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        return super.getView(position, convertView, parent)
     }
 
     override fun newView(context: Context?, cursor: Cursor?, parent: ViewGroup?): View {

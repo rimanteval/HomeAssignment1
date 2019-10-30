@@ -2,7 +2,6 @@ package com.example.homeassignment1
 
 import android.Manifest
 import android.app.SearchManager
-import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -57,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     lateinit var adapter: MyCursorAdapter
     private fun read() {
         val resolver = contentResolver
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.toolbar_menu, menu)
         val searchManager = this.getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -92,5 +92,5 @@ class MainActivity : AppCompatActivity() {
 
         })
         return true
-    }*/
+    }
 }
